@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+/* เว็บกลาง design tokens — product register, restrained strategy.
+   Scene: a Thai gamer / small seller on a phone at night, mid-deal with a stranger
+   from Discord. The screen has to feel like a bank counter, not a game: light,
+   pure-white surface, one deep cobalt for actions, one teal for "money / good close". */
+:root {
+  --bg: oklch(1 0 0);
+  --surface: oklch(0.965 0.006 262);
+  --surface-2: oklch(0.985 0.003 262);
+  --line: oklch(0.9 0.008 262);
+  --line-strong: oklch(0.82 0.012 262);
+  --ink: oklch(0.22 0.02 262);
+  --muted: oklch(0.47 0.02 262);
+  --primary: oklch(0.45 0.16 262);
+  --primary-hover: oklch(0.5 0.16 262);
+  --primary-active: oklch(0.38 0.15 262);
+  --primary-soft: oklch(0.95 0.02 262);
+  --primary-deep: oklch(0.3 0.12 262);
+  --on-primary: oklch(1 0 0);
+  --accent: oklch(0.6 0.13 165);
+  --accent-soft: oklch(0.95 0.03 165);
+  --accent-ink: oklch(0.36 0.1 165);
+  --error: oklch(0.55 0.19 25);
+  --error-soft: oklch(0.96 0.03 25);
+
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 20px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 200ms;
+
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal-backdrop: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-deep: var(--primary-deep);
+  --color-on-primary: var(--on-primary);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
+  --color-error: var(--error);
+  --color-error-soft: var(--error-soft);
+  --font-sans: var(--font-plex-thai), "Noto Sans Thai", system-ui, sans-serif;
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius-lg);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+/* Motion: state-conveying only, 200 ms, ease-out. Reduced motion → instant. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise-in {
+  animation: rise-in 320ms var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise-in {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* Ant Design inputs — house look on top of AntD tokens (theme/antd-theme.ts). */
+.ant-input-affix-wrapper,
+.ant-input-outlined,
+.ant-input-password {
+  transition:
+    border-color var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+}
