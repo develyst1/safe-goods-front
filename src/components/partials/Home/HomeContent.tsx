@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, BadgeCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button, Skeleton } from "antd";
 import { AppHeader } from "@/components/layout/AppHeader";
+import { CreditPill } from "@/components/common";
 import { ROOM_TH } from "@/constant/text/th";
 import { useMe } from "@/hooks/auth";
 
@@ -17,7 +18,7 @@ export default function HomeContent({ sessionDisplayName }: HomeContentProps) {
 
   return (
     <>
-      <AppHeader displayName={me?.displayName ?? sessionDisplayName} />
+      <AppHeader displayName={me?.displayName ?? sessionDisplayName} isAdmin={me?.role === "ADMIN"} />
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-16 pt-12 sm:px-6 sm:pt-20">
         <section className="rise-in max-w-xl">
@@ -28,10 +29,9 @@ export default function HomeContent({ sessionDisplayName }: HomeContentProps) {
               <h1 className="text-[2rem] font-semibold leading-tight tracking-[-0.015em] text-ink sm:text-[2.5rem]">
                 {me?.displayName ?? sessionDisplayName}
               </h1>
-              <p className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-accent-soft py-1.5 pl-2.5 pr-3.5 text-[14px] font-medium text-accent-ink">
-                <BadgeCheck className="size-4" aria-hidden />
-                {ROOM_TH.CREDIT(me?.credit.goodCloseCount ?? 0)}
-              </p>
+              <div className="mt-4">
+                <CreditPill count={me?.credit.goodCloseCount ?? 0} />
+              </div>
             </>
           )}
         </section>

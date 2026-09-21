@@ -137,3 +137,8 @@ export interface OpenRoomRequest {
   feePayer: FeePayer;
   enteredPrice: number;
 }
+
+export interface DeliverRequest {
+  courier?: string;
+  trackingNumber?: string;
+}

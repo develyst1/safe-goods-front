@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans_Thai } from "next/font/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { ConfigProvider } from "antd";
+import { App as AntdApp, ConfigProvider } from "antd";
 import thTH from "antd/locale/th_TH";
 import { AppProviders } from "@/context/AppProviders";
 import { antdTheme } from "@/theme/antd-theme";
@@ -29,7 +29,9 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <AntdRegistry>
           <ConfigProvider theme={antdTheme} locale={thTH}>
-            <AppProviders>{children}</AppProviders>
+            <AntdApp>
+              <AppProviders>{children}</AppProviders>
+            </AntdApp>
           </ConfigProvider>
         </AntdRegistry>
       </body>

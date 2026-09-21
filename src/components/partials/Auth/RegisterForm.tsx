@@ -5,23 +5,18 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { Button, Form, Input } from "antd";
-import { AUTH_TH, ERROR_TH } from "@/constant/text/th";
+import { AUTH_TH, ERROR_TH, FORM_TH } from "@/constant/text/th";
 import { register } from "@/services/auth.service";
 import { isApiError } from "@/types/api/main/common";
 import type { RegisterRequest } from "@/types/api/main/auth";
-import FormError from "./FormError";
+import { FormError } from "@/components/common";
 
 export default function RegisterForm() {
   const router = useRouter();
   const [form] = Form.useForm<RegisterRequest>();
-  const values = Form.useWatch([], form);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  // No client-side rule messages: REQ-001 has no copy for them (see TASK-006 §Questions).
-  // The button stays disabled until every field has something; the BE validates the rest.
-  const canSubmit =
-    !!values?.displayName?.trim() && !!values?.email?.trim() && !!values?.password;
 
   const onFinish = async (body: RegisterRequest) => {
     setError(null);
@@ -57,14 +52,30 @@ export default function RegisterForm() {
       requiredMark={false}
       onFinish={onFinish}
       autoComplete="on"
+      validateTrigger={["onBlur", "onSubmit"]}
     >
-      <Form.Item name="displayName" label={AUTH_TH.DISPLAY_NAME}>
+      {/* R-5 — messages from REQ-001 §Additional wording 2, shown on blur / submit */}
+      <Form.Item name="displayName" label={AUTH_TH.DISPLAY_NAME} rules={[{ required: true, whitespace: true, message: FORM_TH.REQUIRED }]}>
         <Input autoComplete="nickname" maxLength={50} autoFocus />
       </Form.Item>
-      <Form.Item name="email" label={AUTH_TH.EMAIL}>
+      <Form.Item
+        name="email"
+        label={AUTH_TH.EMAIL}
+        rules={[
+          { required: true, whitespace: true, message: FORM_TH.REQUIRED },
+          { type: "email", message: FORM_TH.EMAIL_INVALID },
+        ]}
+      >
         <Input inputMode="email" autoComplete="email" />
       </Form.Item>
-      <Form.Item name="password" label={AUTH_TH.PASSWORD}>
+      <Form.Item
+        name="password"
+        label={AUTH_TH.PASSWORD}
+        rules={[
+          { required: true, message: FORM_TH.REQUIRED },
+          { min: 8, max: 72, message: FORM_TH.PASSWORD_LENGTH },
+        ]}
+      >
         <Input.Password autoComplete="new-password" maxLength={72} />
       </Form.Item>
 
@@ -76,7 +87,6 @@ export default function RegisterForm() {
         block
         size="large"
         loading={submitting}
-        disabled={!canSubmit}
         className="mt-1"
       >
         {AUTH_TH.REGISTER}

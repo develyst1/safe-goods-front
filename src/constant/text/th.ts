@@ -106,3 +106,62 @@ export const CATEGORY_TH = {
   IN_GAME: "ไอเทม/ไอดีเกม",
   PHYSICAL: "สินค้าส่งพัสดุ",
 } as const;
+
+/**
+ * Timeline label per SPEC eventType — each is an existing REQ-001 string (the action's own
+ * button / wording), so the timeline reads "who did what" in the same words the user pressed.
+ */
+export const EVENT_TH: Record<string, string> = {
+  ROOM_OPENED: ROOM_TH.OPEN_ROOM,
+  ROOM_JOINED: ROOM_TH.JOIN,
+  SLIP_UPLOADED: "แนบสลิปโอนเงิน",
+  PAYMENT_CONFIRMED: ADMIN_TH.CONFIRM_SLIP,
+  PAYMENT_REJECTED: ADMIN_TH.REJECT_SLIP,
+  DELIVERED: "ส่งของแล้ว",
+  PARCEL_ARRIVED: ROOM_TH.PARCEL_ARRIVED,
+  RECEIVED_CONFIRMED: ROOM_TH.RECEIVED,
+  AUTO_RELEASED: ROOM_TH.AUTO_RELEASED_EVENT,
+  PAID_OUT: ADMIN_TH.PAYOUT_PAGE,
+  ROOM_CANCELLED: ROOM_TH.CANCEL,
+};
+
+/** Derived from REQ-001 "ส่งของแล้ว (แนบหลักฐาน)" — the parenthetical names the attach step (TASK-008 §Questions). */
+export const ATTACH_EVIDENCE_TH = "แนบหลักฐาน";
+
+/** REQ-001 §Additional wording 2 (Porter, 2026-09-21 — TEST-001 rework R-1..R-8). */
+export const FORM_TH = {
+  REQUIRED: "กรุณากรอกข้อมูลนี้",
+  EMAIL_INVALID: "รูปแบบอีเมลไม่ถูกต้อง",
+  PASSWORD_LENGTH: "รหัสผ่านต้องมี 8–72 ตัวอักษร",
+  DESCRIPTION: "รายละเอียดสินค้า",
+  PRICE: "ราคา (บาท)",
+} as const;
+
+export const NAV_TH = {
+  LOGOUT: "ออกจากระบบ",
+} as const;
+
+export const SHARE_TH = {
+  COPY_LINK: "คัดลอกลิงก์",
+  COPIED: "คัดลอกแล้ว",
+} as const;
+
+export const ROOM_SECTION_TH = {
+  TIMELINE: "ไทม์ไลน์",
+  GUIDANCE: "คำแนะนำ",
+  EVIDENCE: "หลักฐานการส่งของ",
+  ME_MARKER: "(คุณ)",
+} as const;
+
+export const CANCEL_CONFIRM_TH = {
+  BODY: "ยกเลิกห้องนี้? อีกฝ่ายจะเห็นว่าห้องถูกยกเลิก และห้องนี้จะใช้ต่อไม่ได้",
+  OK: "ยืนยันยกเลิก",
+  BACK: "กลับ",
+} as const;
+
+export const ADMIN_TH2 = {
+  EMPTY_PARCELS: "ไม่มีพัสดุรอยืนยัน",
+  EMPTY_PAYOUTS: "ไม่มีรายการรอโอนเงิน",
+  AUTO_RELEASED: (n: number) => `ปล่อยเงินอัตโนมัติแล้ว ${n} ห้อง`,
+  AUTO_RELEASED_NONE: "ไม่มีห้องที่ครบกำหนด",
+} as const;
